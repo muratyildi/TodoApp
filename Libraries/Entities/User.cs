@@ -9,7 +9,7 @@ namespace Entities
 {
     public class User:EntityBase
     {
-        public long Id { get; set; }
+        public long AccountId { get; set; }
 
         public string UserName { get; set; }
 
