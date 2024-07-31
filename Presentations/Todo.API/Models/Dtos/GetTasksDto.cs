@@ -22,6 +22,8 @@ namespace Todo.API.Models.Dtos
         }
         public class TaskModel
         {
+            public long Id { get; set; }
+
             public string Name { get; set; }
 
             public string Description { get; set; }
