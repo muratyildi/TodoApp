@@ -23,6 +23,8 @@ namespace Entities
 
         public List<TodoProjectItem> TodoProjectItems { get; set; }
 
+        public List<Invite> Invites { get; set; }
+
         #endregion
     }
 }

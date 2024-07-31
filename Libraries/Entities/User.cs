@@ -23,6 +23,10 @@ namespace Entities
 
         public List<TodoProjectUserMap> TodoProjectUserMap { get; set; }
 
+        public List<Invite> SentInvites { get; set; } // Gönderilen davet kodları
+
+        public List<Invite> ReceivedInvites { get; set; } // Alınan davet kodları
+
         #endregion
     }
 }

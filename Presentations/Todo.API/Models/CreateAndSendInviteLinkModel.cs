@@ -12,5 +12,8 @@ namespace Todo.API.Models
 
         [Required]
         public long ProjectId { get; set; }
+
+        [Required]
+        public string Code { get; set; }
     }
 }
