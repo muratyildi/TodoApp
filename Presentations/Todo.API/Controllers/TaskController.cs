@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Data.EntityFramework;
 using Entities;
 using Infrastructure.Web.Constants;
+using Infrastructure.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Todo.API.Models;
+using Todo.API.Models.Dtos;
+using X.PagedList.Extensions;
 
 namespace Todo.API.Controllers
 {
@@ -20,6 +23,39 @@ namespace Todo.API.Controllers
         {
             _dataContext = dataContext;
             _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<ApiResult> Get(int page = 1, int size = 10)
+        {
+            try
+            {
+                var accountId = Convert.ToInt64(User.GetClaimValue(ClaimDefaults.AccountId));
+                var account = await _dataContext.Accounts.Include(x => x.User).Include(x => x.User.TodoProjectUserMap).SingleOrDefaultAsync(x => x.Id == accountId);
+
+                var query =  _dataContext.TodoProjectItems
+                    .Where(x=>x.TodoProject.UserId==accountId)
+                    .AsQueryable();
+
+
+                var tasks =  query.ProjectTo<GetTasksDto.TaskModel>(_mapper.ConfigurationProvider).ToPagedList(page, size);
+
+                var dto = new GetTasksDto
+                {
+                    Tasks = tasks.ToList(),
+                    PageNumber = tasks.PageNumber,
+                    PageSize = tasks.PageSize,
+                    TotalItemCount = tasks.TotalItemCount,
+                    TotalPageCount = tasks.PageCount
+                };
+
+                return new ApiResult(ApiStatusDefaults.Success, null, dto);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         [HttpPost]

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Entities;
 using Entities.Enums;
 
 namespace Todo.API.Models
@@ -22,7 +23,7 @@ namespace Todo.API.Models
     {
         public TaskCreateModelProfile()
         {
-            
+            CreateMap<TaskCreateModel, TodoProjectItem>();
         }
     }
 }
