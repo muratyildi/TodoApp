@@ -22,6 +22,7 @@ export class LoginComponent {
     email: new FormControl('test@user.com', [Validators.required, Validators.email]),
     password: new FormControl('123456', [Validators.required, Validators.minLength(3), Validators.maxLength(20)])
   });
+
   hide = signal(true);
 
   clickEvent(event: MouseEvent) {
@@ -30,16 +31,8 @@ export class LoginComponent {
   }
 
   userLogin() {
-    this.router.navigate(['home']);
-    if (this.loginForm.valid) {
-
-    }
-
-
+    this.AuthRepository.UserLogin(this.loginForm.value.email!, this.loginForm.value.password!);
   }
-
-
-
 
 
 
