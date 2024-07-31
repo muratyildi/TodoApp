@@ -13,7 +13,6 @@ export class AuthRepository {
     AuthService = inject(AuthService)
     router = inject(Router)
     snackBar = inject(MatSnackBar);
-
     constructor(@Inject(PLATFORM_ID) public platformId: any) {
     }
 
