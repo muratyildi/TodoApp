@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
-using Entities;
 using Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Todo.API.Models
 {
-    public class TaskCreateModel
+    public class TaskUpdateModel
     {
+        [Required]
+        public long Id { get; set; }
 
         public string Name { get; set; }
 
@@ -16,15 +18,13 @@ namespace Todo.API.Models
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
-
-        public long ProjectId { get; set; }
     }
 
-    public class TaskCreateModelProfile : Profile
+    public class TaskUpdateModelProfile : Profile
     {
-        public TaskCreateModelProfile()
+        public TaskUpdateModelProfile()
         {
-            CreateMap<TaskCreateModel, TodoProjectItem>();
+            CreateMap<TaskUpdateModel, Entities.TodoProjectItem>();
         }
     }
 }

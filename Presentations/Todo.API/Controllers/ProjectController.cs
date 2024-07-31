@@ -113,5 +113,47 @@ namespace Todo.API.Controllers
                 return new ApiResult(ApiStatusDefaults.ValidationError, e.ToString());
             }
         }
+
+        [HttpPut]
+        public async Task<ApiResult> Put([FromForm] ProjectUpdateModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return new ApiResult(ApiStatusDefaults.ValidationError, "Lütfen tüm bilgileri eksiksiz giriniz.");
+
+                var project = await _dataContext.TodoProjects.SingleOrDefaultAsync(x => x.Id == model.Id);
+
+                project = _mapper.Map(model, project);
+
+                _dataContext.TodoProjects.Update(project);
+                await _dataContext.SaveChangesAsync();
+
+                return new ApiResult(ApiStatusDefaults.Success);
+            }
+
+            catch (Exception e)
+            {
+                return new ApiResult(ApiStatusDefaults.Error, e.ToString());
+            }
+        }
+
+        [HttpDelete("{projectId}")]
+        public async Task<ApiResult> Delete(long projectId)
+        {
+            try
+            {
+                var projects = await _dataContext.TodoProjects.FirstOrDefaultAsync(x => x.Id == projectId);
+
+                _dataContext.TodoProjects.Remove(projects);
+                await _dataContext.SaveChangesAsync();
+
+                return new ApiResult(ApiStatusDefaults.Success);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult(ApiStatusDefaults.Success, ex.ToString());
+            }
+        }
     }
 }
