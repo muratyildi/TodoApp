@@ -4,38 +4,22 @@ import { SidenavComponent } from '../../shared/components/sidenav/sidenav.compon
 import { MatInputModule } from '@angular/material/input';
 import { homeRepository } from '../../shared/repositories/home.repository';
 import { CommonModule } from '@angular/common';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+import { TodoDialogComponent } from './todo-dialog/todo-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [SidenavComponent, MatTableModule, MatInputModule,CommonModule]
+  imports: [SidenavComponent, MatTableModule, MatInputModule, CommonModule, MatButtonModule]
 })
 
 export class HomeComponent {
   homeRepository = inject(homeRepository);
-  displayedColumns: string[] = ['name', 'description', 'startDate', 'endDate'];
+  dialog = inject(MatDialog);
+  displayedColumns: string[] = ['name', 'description', 'startDate', 'endDate', 'actions'];
   sidenavOpened = false;
 
   ngOnInit() {
@@ -51,4 +35,23 @@ export class HomeComponent {
     this.homeRepository.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+
+  openAddTodoDialog() {
+    const dialogConfig: MatDialogConfig = {
+      width: '780px',
+      height: '500px',
+      data: {}
+    };
+    const dialogRef = this.dialog.open(TodoDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.homeRepository.addTodo(result);
+      }
+    });
+  }
+
+  deleteTodo() {
+
+  }
 }

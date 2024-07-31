@@ -12,5 +12,13 @@ export class HomeService {
     return this.http.get<any>(environment.apiUrl + `/Task?page=${pageSize}&size=${size}`);
   }
 
+  PostNewTodo(data: any) {
+    return this.http.post<any>(environment.apiUrl + '/Task', data);
+  }
+
+  GetProjectIds(){
+    return this.http.get<any>(environment.apiUrl + `/Project`);
+  }
+
 
 }

@@ -10,7 +10,6 @@ export const apiInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, nex
   const excludedUrls = ['/Account', '/Auth/Login'];
 
   if (!excludedUrls.some(excludedUrl => url.includes(excludedUrl))) {
-    console.log("girdim");
     const clonedReq = req.clone({ headers: req.headers.set('Authorization', `Bearer ${token}`) });
     return next(clonedReq);
   }
