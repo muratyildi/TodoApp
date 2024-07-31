@@ -69,14 +69,22 @@ builder.Services.AddAuthentication(x =>
 
 #endregion
 
-#region PostgreSql
-builder.Services.AddDbContext<DataContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), x => x.EnableRetryOnFailure()));
+//#region PostgreSql
+//builder.Services.AddDbContext<DataContext>(options =>
+//    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), x => x.EnableRetryOnFailure()));
+//#endregion
+
+#region Entity Framework
+
+builder.Services.AddDbContext<DataContext>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), x => x.EnableRetryOnFailure()); });
+
 #endregion
 
-//#region AutoMapper
-//builder.Services.AddAutoMapper(typeof(Program));
-//#endregion
+
+
+#region AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
+#endregion
 
 var app = builder.Build();
 

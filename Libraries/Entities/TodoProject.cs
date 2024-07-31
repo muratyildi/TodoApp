@@ -15,6 +15,8 @@ namespace Entities
 
         public string Description { get; set; }
 
+        public long UserId { get; set; }
+
         #region Collection 
 
         public List<TodoProjectUserMap> TodoProjectUserMap { get; set; }

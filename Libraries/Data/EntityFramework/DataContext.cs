@@ -16,11 +16,12 @@ namespace Data.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new AccountConfiguration());
-            modelBuilder.ApplyConfiguration(new TodoProjectConfiguration());
-            modelBuilder.ApplyConfiguration(new TodoProjectItemConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new TodoProjectUserMapConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+            //modelBuilder.ApplyConfiguration(new AccountConfiguration());
+            //modelBuilder.ApplyConfiguration(new TodoProjectConfiguration());
+            //modelBuilder.ApplyConfiguration(new TodoProjectItemConfiguration());
+            //modelBuilder.ApplyConfiguration(new UserConfiguration());
+            //modelBuilder.ApplyConfiguration(new TodoProjectUserMapConfiguration());
         }
     }
 }

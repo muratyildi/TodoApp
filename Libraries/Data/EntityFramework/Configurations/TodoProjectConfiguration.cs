@@ -17,6 +17,7 @@ namespace Data.EntityFramework.Configurations
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Description).IsRequired();
+            builder.Property(x => x.UserId).IsRequired();
         }
     }
 }

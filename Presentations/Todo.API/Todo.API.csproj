@@ -8,20 +8,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="X.PagedList" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\..\Libraries\Data\Data.csproj" />
+    <ProjectReference Include="..\..\Libraries\Entities\Entities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Infrastructure.Web\Infrastructure.Web.csproj" />
+    <ProjectReference Include="..\..\Libraries\JwtManager\JwtManager.csproj" />
+    <ProjectReference Include="..\..\Libraries\Services\Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Data\Data.csproj" />
-    <ProjectReference Include="..\..\Libraries\Entities\Entities.csproj" />
-    <ProjectReference Include="..\..\Libraries\JwtManager\JwtManager.csproj" />
+    <Folder Include="Models\Dtos\" />
   </ItemGroup>
 
 </Project>
