@@ -1,0 +1,38 @@
+.main-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    height: 100vh;
+}
+
+@media (max-width: 800px) {
+    .main-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-add {
+    margin: 1rem 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1rem;
+    margin-top: 4rem;
+    overflow: auto;
+    .filter {
+        width: 100%;
+    }
+    table {
+        overflow: auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 900px) {
+    .content {
+        align-items: flex-start;
+    }
+}

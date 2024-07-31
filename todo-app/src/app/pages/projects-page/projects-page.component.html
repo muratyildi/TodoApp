@@ -1,0 +1,30 @@
+<div class="main-container">
+    <app-sidenav></app-sidenav>
+    <div class="content">
+        <mat-form-field class="filter">
+            <mat-label>Arama</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Arama" #input>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="btn-add" (click)="addNewProject()">Proje Ekle</button>
+        <table mat-table [dataSource]="projectRepository.dataSource" class="mat-elevation-z8 ">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> İsim</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Açıklama </th>
+                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Aksiyonlar </th>
+                <td mat-cell *matCellDef="let element">
+                    <button (click)="deleteProject(element.id)" mat-button>Sil</button>
+                    <button (click)="editProjectDialog(element.id,element.name,element.description,element.userId)"
+                        mat-button>Düzenle</button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

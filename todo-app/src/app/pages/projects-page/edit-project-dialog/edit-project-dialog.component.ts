@@ -10,55 +10,40 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HomeService } from '../../../shared/services/home.service';
+import { AuthRepository } from '../../../shared/repositories/auth.repository';
 
 @Component({
-  selector: 'app-todo-dialog-edit',
+  selector: 'app-new-project-dialog',
   standalone: true,
   imports: [MatFormField, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, CommonModule, MatInputModule, MatButtonModule],
-  templateUrl: './todo-dialog-edit.component.html',
-  styleUrl: './todo-dialog-edit.component.scss'
+  templateUrl: './edit-project-dialog.component.html',
+  styleUrl: './edit-project-dialog.component.scss'
 })
-export class TodoDialogEditComponent {
-  todoForm: FormGroup;
-  homeService = inject(HomeService);
-  projects: any[] = [];
-  statuses = [
-    { value: 0, label: 'Beklemede' },
-    { value: 2, label: 'İşlemde' },
-    { value: 3, label: 'Tamamlandı' },
-    { value: 4, label: 'Onay Aşamasında' },
-    { value: 5, label: 'Tamamlandı' }
-  ];
+export class EditProjectDialogComponent {
+  projectForm: FormGroup;
+  authRepository = inject(AuthRepository);
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<TodoDialogEditComponent>,
+    private dialogRef: MatDialogRef<EditProjectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.getProjectIds();
-    this.todoForm = this.fb.group({
-      id: [data.id || ''],
-      name: [data.name || '', Validators.required],
-      description: [data.description || '', Validators.required],
-      status: [data.status || 0],
-      startDate: [data.startDate || new Date()],
-      endDate: [data.endDate || ''],
+    this.projectForm = this.fb.group({
+      id: [data.id, Validators.required],
+      name: [data.name, Validators.required],
+      description: [data.description, Validators.required],
+      userIds: [[data.userId], Validators.required],
     });
   }
 
-  getProjectIds() {
-    this.homeService.GetProjectIds().subscribe(data => {
-      this.projects = data.data.projects;
-    })
-  }
-
   onSave() {
-    if (this.todoForm.valid) {
-      this.dialogRef.close(this.todoForm.value);
+    if (this.projectForm.valid) {
+      this.dialogRef.close(this.projectForm.value);
     }
   }
 
   onCancel() {
     this.dialogRef.close();
   }
+
 }

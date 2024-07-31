@@ -19,16 +19,16 @@ export class homeRepository {
     }
 
     deleteTodo(id: number) {
-        this.homeService.DeleteTodo(id).subscribe(data => {
-            if (confirm('Silmek istiyor musunuz?') == true) {
+        if (confirm('Silmek istiyor musunuz?')) {
+            this.homeService.DeleteTodo(id).subscribe(data => {
                 if (data.status == 'success') {
-                    this.snackBar.open('Başarıyla Eklendi','Ok');
+                    this.snackBar.open('Başarıyla Silindi', 'Ok');
                     this.getTodoDatas();
                 } else {
-                    this.snackBar.open(data.message, 'ok')
+                    this.snackBar.open(data.message, 'Ok');
                 }
-            }
-        })
+            });
+        }
     }
 
     addTodo(todo: any) {

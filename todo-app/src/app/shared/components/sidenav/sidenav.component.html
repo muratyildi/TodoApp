@@ -9,8 +9,14 @@
         <mat-nav-list>
             <a mat-list-item [routerLink]="['/home']" routerLinkActive="router-link-active">
                 <span class="entry">
-                    <mat-icon>house</mat-icon>
+                    <mat-icon>home</mat-icon>
                     <span>Anasayfa</span>
+                </span>
+            </a>
+            <a mat-list-item [routerLink]="['/projects']" routerLinkActive="router-link-active">
+                <span class="entry">
+                    <mat-icon>task_alt</mat-icon>
+                    <span>Projeler</span>
                 </span>
             </a>
             <a mat-list-item (click)="logOut()">

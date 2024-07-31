@@ -28,7 +28,6 @@ export class HomeComponent {
     { value: 4, label: 'Onay Aşamasında' },
     { value: 5, label: 'Tamamlandı' }
   ];
-  sidenavOpened = false;
 
   ngOnInit() {
     this.getTodoData();
@@ -81,5 +80,5 @@ export class HomeComponent {
     const status = this.statuses.find(status => status.value === value);
     return status ? status.label : 'Bilinmiyor';
   }
-  
+
 }

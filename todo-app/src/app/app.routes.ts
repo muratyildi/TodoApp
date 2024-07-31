@@ -4,12 +4,20 @@ import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './shared/guard/auth.guard';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { RegisterAccountComponent } from './pages/register-account/register-account.component';
+import { ProjectsPageComponent } from './pages/projects-page/projects-page.component';
 
 export const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'
+    },
+    {
+        path: 'projects',
+        pathMatch: 'full',
+        canActivate: [authGuard],
+        title: 'Projeler',
+        component: ProjectsPageComponent
     },
     {
         path: 'home',
