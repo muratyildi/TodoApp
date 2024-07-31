@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { HomeService } from '../../shared/services/home.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { SidenavComponent } from '../../shared/components/sidenav/sidenav.component';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
+import { homeRepository } from '../../shared/repositories/home.repository';
+import { CommonModule } from '@angular/common';
 
 export interface PeriodicElement {
   name: string;
@@ -29,30 +30,25 @@ const ELEMENT_DATA: PeriodicElement[] = [
   standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [SidenavComponent, MatTableModule,MatInputModule]
+  imports: [SidenavComponent, MatTableModule, MatInputModule,CommonModule]
 })
 
 export class HomeComponent {
-  homeService = inject(HomeService);
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  homeRepository = inject(homeRepository);
+  displayedColumns: string[] = ['name', 'description', 'startDate', 'endDate'];
   sidenavOpened = false;
 
   ngOnInit() {
-
+    this.getTodoData();
   }
 
-  getTableData() {
-
-  }
-
-  handleSidenavStatusChange(opened: boolean) {
-    this.sidenavOpened = opened;
+  getTodoData() {
+    this.homeRepository.getTodoDatas();
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.homeRepository.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }
