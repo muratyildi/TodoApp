@@ -1,0 +1,58 @@
+<div class="login-content">
+    <h6>Kayıt Ol</h6>
+    <form class="form" [formGroup]="registerForm" (ngSubmit)="userLogin()" (keyup.enter)="userLogin()">
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>E-Posta</mat-label>
+                <input formControlName="email" placeholder="Email" matInput>
+            </mat-form-field>
+            @if (registerForm.get('email')?.hasError('required') && (registerForm.get('email')?.touched ||
+            registerForm.get('email')?.dirty)) {
+            <span class="hint">{{'Bu alan gerekli'}}</span>
+            } @else if (registerForm.get('email')?.hasError('email') && (registerForm.get('email')?.touched ||
+            registerForm.get('email')?.dirty)) {
+            <span class="hint">{{'Lütfen geçerli bir mail adresi girin'}}</span>
+            }
+        </div>
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>Şifre</mat-label>
+                <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" />
+                <button class="button-visibility" mat-icon-button matSuffix (click)="clickEvent($event)"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+                    <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            @if (registerForm.get('password')?.hasError('required') && (registerForm.get('password')?.touched ||
+            registerForm.get('password')?.dirty)) {
+            <span class="hint ">{{'Bu alan gerekli'}}</span>
+            } @else if ((registerForm.get('password')?.hasError('minlength') ||
+            registerForm.get('password')?.hasError('maxlength')) && (registerForm.get('password')?.touched ||
+            registerForm.get('password')?.dirty)) {
+            <span class="hint">{{'Şifreniz 3-20 karakter arasında olmalı'}}</span>
+            }
+        </div>
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>Adınız</mat-label>
+                <input formControlName="fullName" placeholder="Adınız" matInput>
+            </mat-form-field>
+            @if (registerForm.get('fullName')?.hasError('required') && (registerForm.get('fullName')?.touched ||
+            registerForm.get('fullName')?.dirty)) {
+            <span class="hint">{{'Bu alan gerekli'}}</span>
+            }
+        </div>
+        <div class="form-field">
+            <mat-form-field>
+                <mat-label>Kullanıcı Adı</mat-label>
+                <input formControlName="username" placeholder="Kullanıcı Adı" matInput>
+            </mat-form-field>
+            @if (registerForm.get('username')?.hasError('required') && (registerForm.get('username')?.touched ||
+            registerForm.get('username')?.dirty)) {
+            <span class="hint">{{'Bu alan gerekli'}}</span>
+            }
+        </div>
+        <button mat-raised-button class="login-button" [disabled]="!registerForm.valid">Kayıt Ol</button>
+    </form>
+
+</div>

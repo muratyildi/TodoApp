@@ -3,6 +3,7 @@ import { AuthService } from "../services/auth.service";
 import { environment } from "../../../environments/environment";
 import { Router } from "@angular/router";
 import { isPlatformBrowser } from "@angular/common";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +12,7 @@ export class AuthRepository {
     public authLocalStorageToken = `${environment.appName}`;
     AuthService = inject(AuthService)
     router = inject(Router)
+    snackBar = inject(MatSnackBar);
 
     constructor(@Inject(PLATFORM_ID) public platformId: any) {
     }
@@ -22,6 +24,20 @@ export class AuthRepository {
                     this.SetUserLocalStorage(data);
                     this.router.navigate(['/home']);
                 } else {
+                    this.snackBar.open(data.message, 'Ok');
+                    throw new Error(data.status);
+                }
+            }
+        })
+    }
+
+    CreateUser(email: string, password: string, fullName: string, username: string) {
+        this.AuthService.CreateUser(email, password, fullName, username).subscribe({
+            next: (data) => {
+                if (data.status == 'success') {
+                    this.router.navigate(['/login']);
+                } else {
+                    this.snackBar.open(data.message, 'Ok');
                     throw new Error(data.status);
                 }
             }
@@ -65,10 +81,9 @@ export class AuthRepository {
     }
 
     LogoutUser() {
-        if (isPlatformBrowser(this.platformId)) {
-            localStorage.removeItem(`${this.authLocalStorageToken}`);
-            this.router.navigate(['login']);
-        }
+        localStorage.clear();
+        this.router.navigate(['login']);
     }
+
 
 }

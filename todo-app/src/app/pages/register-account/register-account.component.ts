@@ -8,22 +8,23 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register-account',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './register-account.component.html',
+  styleUrl: './register-account.component.scss'
 })
-export class LoginComponent {
+export class RegisterAccountComponent {
   AuthRepository = inject(AuthRepository)
   router = inject(Router);
   hide = signal(true);
 
-  loginForm = new FormGroup({
-    email: new FormControl('test@user.com', [Validators.required, Validators.email]),
-    password: new FormControl('123456', [Validators.required, Validators.minLength(3), Validators.maxLength(20)])
+  registerForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    fullName: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required]),
   });
-
 
   clickEvent(event: MouseEvent) {
     event.preventDefault();
@@ -32,12 +33,9 @@ export class LoginComponent {
   }
 
   userLogin() {
-    if (this.loginForm.valid) {
-      this.AuthRepository.UserLogin(this.loginForm.value.email!, this.loginForm.value.password!);
+    if (this.registerForm.valid) {
+      this.AuthRepository.CreateUser(this.registerForm.value.email!, this.registerForm.value.password!, this.registerForm.value.fullName!, this.registerForm.value.username!);
     }
   }
-
-
-
 
 }

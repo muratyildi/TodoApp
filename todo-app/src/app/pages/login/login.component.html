@@ -1,4 +1,5 @@
 <div class="login-content">
+    <h6>Giriş Yap</h6>
     <form class="form" [formGroup]="loginForm" (ngSubmit)="userLogin()" (keyup.enter)="userLogin()">
         <div class="form-field">
             <mat-form-field>
@@ -30,6 +31,9 @@
             loginForm.get('password')?.dirty)) {
             <span class="hint">{{'Şifreniz 3-20 karakter arasında olmalı'}}</span>
             }
+        </div>
+        <div class="register-container">
+            <a [routerLink]="['/register']" routerLinkActive="router-link-active">Kayıt Ol</a>
         </div>
         <button mat-raised-button class="login-button" [disabled]="!loginForm.valid">Giriş</button>
     </form>
