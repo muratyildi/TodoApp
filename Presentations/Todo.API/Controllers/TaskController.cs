@@ -79,5 +79,47 @@ namespace Todo.API.Controllers
                 return new ApiResult(ApiStatusDefaults.Error, e.ToString());
             }
         }
+
+        [HttpDelete("{taskId}")]
+        public async Task<ApiResult> Delete(long taskId)
+        {
+            try
+            {
+                var task = await _dataContext.TodoProjectItems.FirstOrDefaultAsync(x => x.Id == taskId);
+
+                _dataContext.TodoProjectItems.Remove(task);
+                await _dataContext.SaveChangesAsync();
+
+                return new ApiResult(ApiStatusDefaults.Success);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult(ApiStatusDefaults.Success, ex.ToString());
+            }
+        }
+
+        [HttpPut]
+        public async Task<ApiResult> Put([FromForm] TaskUpdateModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return new ApiResult(ApiStatusDefaults.ValidationError, "Lütfen tüm bilgileri eksiksiz giriniz.");
+
+                var task = await _dataContext.TodoProjectItems.SingleOrDefaultAsync(x => x.Id == model.Id);
+
+                task = _mapper.Map(model, task);
+
+                _dataContext.TodoProjectItems.Update(task);
+                await _dataContext.SaveChangesAsync();
+
+                return new ApiResult(ApiStatusDefaults.Success);
+            }
+
+            catch (Exception e)
+            {
+                return new ApiResult(ApiStatusDefaults.Error, e.ToString());
+            }
+        }
     }
 }
