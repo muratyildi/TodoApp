@@ -10,10 +10,22 @@ export class AuthService {
     http = inject(HttpClient);
 
     Login(email: string, password: string): Observable<any> {
-        return this.http.post<any>(environment.apiUrl + '/v1/Account',
+        return this.http.post<any>(environment.apiUrl + '/Auth/Login',
             {
                 email: email,
                 password: password
+            }
+        )
+    }
+
+
+    CreateUser(email: string, password: string, fullName: string, username: string): Observable<any> {
+        return this.http.post<any>(environment.apiUrl + '/Account',
+            {
+                email: email,
+                password: password,
+                fullName: fullName,
+                username: username
             }
         )
     }
