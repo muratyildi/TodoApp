@@ -1,0 +1,27 @@
+<div class="dialog">
+    <h1 mat-dialog-title>Düzenle</h1>
+    <div class="dialog-content">
+        <form [formGroup]="todoForm">
+            <mat-form-field appearance="fill">
+                <mat-label>İsim</mat-label>
+                <input matInput formControlName="name" />
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Açıklama</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Durum</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of statuses" [value]="status.value">
+                        {{ status.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onCancel()">İptal</button>
+        <button mat-button (click)="onSave()">Kaydet</button>
+    </div>
+</div>

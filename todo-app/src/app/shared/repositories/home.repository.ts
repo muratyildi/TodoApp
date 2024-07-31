@@ -18,23 +18,47 @@ export class homeRepository {
         })
     }
 
-    postNewTodo() {
-
-    }
-
-    PutTodo(id: string) {
-
-    }
-
-    deleteTodo(id: string) {
-
+    deleteTodo(id: number) {
+        this.homeService.DeleteTodo(id).subscribe(data => {
+            if (confirm('Silmek istiyor musunuz?') == true) {
+                if (data.status == 'success') {
+                    this.snackBar.open('Başarıyla Eklendi','Ok');
+                    this.getTodoDatas();
+                } else {
+                    this.snackBar.open(data.message, 'ok')
+                }
+            }
+        })
     }
 
     addTodo(todo: any) {
         this.homeService.PostNewTodo(todo).subscribe(data => {
-            console.log(data);
             if (data.status == 'success') {
-                this.snackBar.open('Başarıyla Eklendi');
+                this.snackBar.open('Başarıyla Eklendi','Ok');
+                this.getTodoDatas();
+            } else {
+                this.snackBar.open(data.message, 'ok')
+            }
+        })
+    }
+
+    updateTodo(data: any) {
+        const formData = new FormData();
+        
+        formData.append('id',data.id);
+        formData.append('Name',data.name);
+        formData.append('Description',data.description);
+        formData.append('Status',data.status.toString());
+        formData.append('Name',data.name);
+        formData.append('StartDate',data.startDate);
+        formData.append('EndDate',data.endDate);
+
+        this.homeService.PutTodo(formData).subscribe(data => {
+            if (data.status == 'success') {
+                this.snackBar.open('Başarıyla Eklendi','Ok');
+                this.getTodoDatas();
+            } else {
+                this.snackBar.open(data.message, 'ok')
             }
         })
     }

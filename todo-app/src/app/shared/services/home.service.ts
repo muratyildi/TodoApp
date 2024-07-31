@@ -16,9 +16,16 @@ export class HomeService {
     return this.http.post<any>(environment.apiUrl + '/Task', data);
   }
 
-  GetProjectIds(){
+  GetProjectIds() {
     return this.http.get<any>(environment.apiUrl + `/Project`);
   }
 
+  DeleteTodo(id: number) {
+    return this.http.delete<any>(environment.apiUrl + `/Task/${id}`);
+  }
+
+  PutTodo(data: any) {
+    return this.http.put<any>(environment.apiUrl + '/Task', data);
+  }
 
 }
