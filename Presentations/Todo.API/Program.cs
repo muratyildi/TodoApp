@@ -4,6 +4,8 @@ using JwtManager.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Services.Abstract;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,7 +82,7 @@ builder.Services.AddDbContext<DataContext>(options => { options.UseSqlServer(bui
 
 #endregion
 
-
+builder.Services.AddScoped<IInviteCodeGenerator, InviteCodeGenerator>();
 
 #region AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));

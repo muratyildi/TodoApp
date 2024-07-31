@@ -51,10 +51,10 @@ namespace Todo.API.Controllers
 
                 return new ApiResult(ApiStatusDefaults.Success, null, dto);
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                return new ApiResult(ApiStatusDefaults.ValidationError, e.ToString());
             }
         }
 
